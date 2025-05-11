@@ -29,4 +29,4 @@ export const NuevaVenta= async(fecha,idCli,prods)=>{
         console.error("Error al generar venta:", error.message);
         return { error: error.message };
     }
-}
+};
