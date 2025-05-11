@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Carrito</title>
+</head>
+<body>
+    <header></header>
+    <body class="flex flex-col items-center">        
+        <section class="flex flex-row w-full">                   
+            <section class="w-full grid grid-cols-1 sm:grid-cols-2 sm:w-full  md:grid-cols-3 lg:grid-cols-3 gap-10 p-12" id="ContainerProductos">
+                <!-- CARDS -->               
+            </section>
+            <section class="flex flex-col justify-between items-center w-3/6 max-h-screen pt-40 pb-40 bg-gray-100 md:sticky top-0">              
+                <label class="text-4xl font-semibold">SubTotal</label>
+                <div id="detalleContainer" class="flex flex-col w-2/5 border-t-2 border-b-2 -mt-6 -mb-10">
+                    <!-- Detalle de las ventas -->                    
+                </div>
+                <label class="text-4xl font-bold -mb-10">Total</label>
+                <label id="totalCarrito" class="text-3xl font-bold -mb-5"></label>                      
+                <button class="btnComprar w-3/5 bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-500 hover:scale-105 transition-transform" type="button">Finalizar compra</button>   
+            </section>
+        </section>                
+    </body>
+    <script type="module" src="./cart.controller.js"></script> 
+</html>

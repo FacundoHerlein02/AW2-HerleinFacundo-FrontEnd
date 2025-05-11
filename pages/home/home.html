@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Home</title>
+</head>
+<body>
+    <header class="w-full h-20 bg-blue-200">
+        <div>
+            <p>Iniciar Sesion</p>
+        </div>
+        <div>
+            <a href="../cart/cart.html"><p>carrito</p></a>
+        </div>
+    </header>
+    <body class="bg-stone-200 mx-auto p-6 flex flex-col items-center">        
+        <section class="w-full grid-cols-3 bg-stone-200 grid sm:sticky top-0 sm:grid-cols-5 md:w-4/5 lg:w-3/5 xl:w-2/5 gap-4 p-4 rounded-xl" id="filtroMarca" >              
+            <!-- FILTROS -->       
+        </section>
+        <section class="w-full grid grid-cols-1 sm:grid-cols-2 sm:w-full  md:grid-cols-3 lg:grid-cols-4 gap-10 p-12" id="ContainerProductos">
+            <!-- CARDS -->
+        </section>      
+    </body>
+    <footer> <h2>FOOTER</h2></footer>
+    <script type="module" src="./home.controller.js"></script>
+</body>
+</html>
