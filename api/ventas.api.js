@@ -1,5 +1,5 @@
 import {api} from "./API.js";
-export const NuevaVenta= async(fecha,idCli,prods)=>{    
+export const NuevaVenta= async(venta)=>{    
     try
     {
         const Res= await fetch(`${api}/ventas/newVenta`,{
@@ -7,11 +7,7 @@ export const NuevaVenta= async(fecha,idCli,prods)=>{
             headers:{
                 'Content-Type' : 'application/json'
             },
-            body:JSON.stringify({
-                fecha,
-                idCli,
-                prods
-            })
+            body:JSON.stringify(venta)
         });
         if(!Res.ok)
         {
@@ -19,7 +15,7 @@ export const NuevaVenta= async(fecha,idCli,prods)=>{
             throw new Error(errorData.error || "Error desconocido al realizar venta");
         }        
         const data= await Res.json();   
-        if (!data.result) {
+        if (!data.NewVenta) {
             throw new Error("La respuesta no contiene una venta.");
         }     
         return data;

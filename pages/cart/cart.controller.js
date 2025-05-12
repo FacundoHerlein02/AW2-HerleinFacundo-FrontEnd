@@ -1,4 +1,5 @@
 import {cardsCart,detalleVenta,calcularTotal} from "../../components/cardCart.component.js";
+import {NuevaVenta} from "../../api/ventas.api.js";
 const cartContainer=document.getElementById('ContainerProductos');
 const detalleContainer=document.getElementById('detalleContainer');
 const total= document.getElementById('totalCarrito');
@@ -39,7 +40,7 @@ function asignarEventosCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));
             alert("Moto eliminada del carrito.");
             //Recarga la vista
-            location.reload();         
+            ActualizarCarrito({ result: carrito });        
         });
     });
     btnsMenos.forEach(btnM=>{
@@ -59,8 +60,8 @@ function asignarEventosCarrito() {
                 }                      
             }        
             // Guardamos el carrito actualizado
-            localStorage.setItem('carrito', JSON.stringify(carrito));          
-            ActualizarCarrito(carritoObj);
+            localStorage.setItem('carrito', JSON.stringify(carrito));                             
+            ActualizarCarrito({ result: carrito });
         });        
     });
     btnsMas.forEach(btnMas=>{
@@ -84,11 +85,34 @@ function asignarEventosCarrito() {
             }        
             // Guardamos el carrito actualizado
             localStorage.setItem('carrito', JSON.stringify(carrito));            
-            ActualizarCarrito(carritoObj);
+            ActualizarCarrito({ result: carrito });
         });        
     });
-    btnComprar.addEventListener('click',()=>{
-        alert("Finalizar compra")
+    btnComprar.addEventListener('click',async()=>{        
+        const user= JSON.parse(sessionStorage.getItem('usuario'));
+        const productos= obtenerProductos();
+        const venta={
+            fecha:dayjs().format('DD/MM/YYYY'),
+            idCli:user.id,
+            prods:productos.result.map((p)=>({
+                idProd: p.id,
+                cantidad: p.cantidad
+            }))
+        };        
+        const ventaNueva= await NuevaVenta(venta);
+        if(ventaNueva.error)
+        {
+            return alert(`Error al obtener la venta: ${ventaNueva.error}`);
+        }
+        if (!ventaNueva || !ventaNueva.NewVenta){
+            return alert("Error: La respuesta de la venta es inválida.");
+        }    
+        console.log(JSON.stringify(ventaNueva, null, 2));
+        alert("Gracias por su compra!")
+        //Borra los productos del carrito
+        localStorage.removeItem('carrito');        
+        carritoObj=obtenerProductos();                 
+        ActualizarCarrito(carritoObj);
     });
 };
 //Lee los productos del LocalStorage
