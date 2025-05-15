@@ -15,7 +15,7 @@ export const cards =(productos)=>{
                     <img class="w-full h-full object-contain" src="${m.Imagen}" alt="Moto${m.Marca}">
                 </div>
                 <div class="mt-5 flex flex-col items-center">                
-                    <h3 class="text-center font-semibold text-2xl">${m.Descripcion}</h3>
+                    <h3 class="text-center font-semibold text-2xl text-ellipsis overflow-hidden w-4/5 text-nowrap">${m.Descripcion}</h3>
                     <h3 class="text-center text-1xl">${m.Precio}</h3>
                     <button class="btnCarrito m-3 w-4/5 bg-indigo-300 text-white px-4 py-2 rounded-full hover:bg-indigo-400  hover:scale-105 transition-transform" type="button">carrito</button>
                 </div>

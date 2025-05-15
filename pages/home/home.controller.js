@@ -1,11 +1,17 @@
 import {filtro} from "../../components/filtroMarca.component.js"
 import{getAllProductos,getProductosMarca,getProductosId} from"../../api/productos.api.js";
 import {cards} from "../../components/cards.component.js"
+import {navbar,navbarEventos} from"/components/navbar.component.js"
+import {footer} from"/components/footer.component.js";
+const footerContainer= document.getElementById('footerContainer');
+const navContainer= document.getElementById('headerContainer');
 const cardContainer = document.getElementById('ContainerProductos');
 const containerfiltroMarcas= document.getElementById('filtroMarca');
 let productos;
 let cardsHTML;
 document.addEventListener('DOMContentLoaded', async () => {
+    navContainer.innerHTML=navbar;
+    footerContainer.innerHTML=footer;
     //Carga todos los productos
     productos= await getAllProductos()    
     cardsHTML = cards(productos);       
@@ -17,6 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function asignarEventos(){
     asignarEventosCarrito()
     asignarEventosFiltro()
+    navbarEventos()
 };
 function asignarEventosFiltro(){
     const marcas= containerfiltroMarcas.querySelectorAll('div[data-marca]');

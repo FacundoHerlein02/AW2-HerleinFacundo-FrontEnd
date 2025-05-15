@@ -15,7 +15,7 @@ export const cardsCart =(productos)=>{
                     <img class="w-full h-full object-contain" src="${m.Imagen}" alt="Moto${m.Marca}">
                 </div>
                 <div class="mt-5 flex flex-col items-center">                
-                    <h3 class="text-center font-semibold text-2xl">${m.Descripcion}</h3>
+                    <h3 class="text-center font-semibold text-2xl text-ellipsis overflow-hidden w-4/5 text-nowrap">${m.Descripcion}</h3>
                     <h3 class="text-center text-1xl">${m.Precio}</h3>
                     <div class="shadow-lg shadow-gray-400 bg-stone-300 w-2/4 flex flex-row justify-between items-center rounded-xl pl-5 pr-5 p-1">                        
                         <button class="btnMenos text-2xl font-semibold cursor-pointer hover:text-white"><i class="fa-solid fa-minus"></i></button>
@@ -40,7 +40,7 @@ export const detalleVenta= (productos)=>{
     }
     return motos.map((m)=>`           
         <div class="flex justify-between m-1">
-            <label class="text-lg font-semibold">${m.Descripcion}: </label> <label>${m.Precio}</label>
+            <label class="text-lg font-semibold w-3/5 border-b-2">${m.Descripcion}: *${m.cantidad}</label> <label class="w-2/5 text-end border-b-2">${m.Precio}</label>
         </div>            
     `).join('');
 }
@@ -48,7 +48,7 @@ export function calcularTotal(productos){
     let total=0;
     if(productos.error)    
     {
-        console.error("Error al cargar calcular el total:", productos.error);
+        console.error("Error al calcular el total:", productos.error);
         return;
     }   
     const motos= productos.result;
@@ -56,12 +56,15 @@ export function calcularTotal(productos){
         console.error("No se encontro detalle.");
         return;
     }
-    const Total= motos.forEach((e)=>{
+    motos.forEach((e)=>{
         const precioNumerico = Number(e.Precio.replace('$', '').replace(',', ''));
         let subtotal=e.cantidad * precioNumerico;        
         total= total+ subtotal
-    })
-    return total
+    })    
+    return new Intl.NumberFormat('es-AR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(total);
 };
 
 

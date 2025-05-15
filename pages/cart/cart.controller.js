@@ -1,12 +1,18 @@
 import {cardsCart,detalleVenta,calcularTotal} from "../../components/cardCart.component.js";
 import {NuevaVenta} from "../../api/ventas.api.js";
+import {navbar,navbarEventos} from"/components/navbar.component.js"
+import {footer} from"/components/footer.component.js";
 const cartContainer=document.getElementById('ContainerProductos');
 const detalleContainer=document.getElementById('detalleContainer');
 const total= document.getElementById('totalCarrito');
-document.addEventListener('DOMContentLoaded',async()=>{   
+const footerContainer= document.getElementById('footerContainer');
+const navContainer= document.getElementById('headerContainer');
+document.addEventListener('DOMContentLoaded',async()=>{     
+    navContainer.innerHTML=navbar;
+    footerContainer.innerHTML=footer;
     let productos= obtenerProductos();
     ActualizarCarrito(productos);       
-})
+});
 function ActualizarCarrito(productos){
     const cardsHTML = cardsCart(productos);
     const detalleHTML=detalleVenta(productos);
@@ -15,11 +21,13 @@ function ActualizarCarrito(productos){
         cartContainer.innerHTML = cardsHTML;
         detalleContainer.innerHTML=detalleHTML;        
         total.innerText=`$${totalCarrito}`
+        document.querySelector('.btnComprar').disabled = false;
         asignarEventosCarrito();
     } else {
-        cartContainer.innerHTML = `<p class="text-center text-lg text-red-500">Error al mostrar el carrito.</p>`;
+        cartContainer.innerHTML = `<p class="text-center text-lg text-red-500">Carrito vacío.</p>`;
         detalleContainer.innerHTML = `<p class="text-center text-lg text-red-500">Error al mostrar el detalle.</p>`;
-        total.innerHTML = `<p class="text-center text-lg text-red-500">Error al calcular el total.</p>`;
+        total.innerHTML = `<p class="text-center text-lg text-red-500">$0</p>`;
+        document.querySelector('.btnComprar').disabled = true;
     }
 }
 function asignarEventosCarrito() {
@@ -27,6 +35,7 @@ function asignarEventosCarrito() {
     const btnsMenos=document.querySelectorAll('.btnMenos');
     const btnsMas=document.querySelectorAll('.btnMas');
     const btnComprar= document.querySelector('.btnComprar');
+    navbarEventos();
     btnsCarrito.forEach(btn => {
         btn.addEventListener('click',(e) => {
             const card = e.target.closest('[data-id]');
@@ -40,7 +49,7 @@ function asignarEventosCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));
             alert("Moto eliminada del carrito.");
             //Recarga la vista
-            ActualizarCarrito({ result: carrito });        
+            ActualizarCarrito({ result: carrito });            
         });
     });
     btnsMenos.forEach(btnM=>{
