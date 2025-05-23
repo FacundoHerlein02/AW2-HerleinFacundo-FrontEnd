@@ -59,14 +59,24 @@ function agregarAlCarrito(moto) {
     // Buscamos si ya existe la moto en el carrito
     const index = carrito.findIndex(p => p.id === moto.id);
     if (index !== -1) {
-        //Aumenta cantidad
-        carrito[index].cantidad += 1;
-        alert(`Moto agregada al carrito: ${moto.Descripcion} | Cantidad: ${carrito[index].cantidad}`);
+        if(carrito[index].cantidad < moto.Stock)
+        {
+            carrito[index].cantidad += 1;
+            alert(`Moto agregada al carrito: ${moto.Descripcion} | Cantidad: ${carrito[index].cantidad}`);
+        }
+        else {
+            alert("No hay stock suficiente para agregar más unidades de este producto.");
+        }        
     } else {
         // Si no está, la agregamos con cantidad 1
-        const motoConCantidad = { ...moto, cantidad: 1 };
-        carrito.push(motoConCantidad);
-        alert(`Moto agregada al carrito: ${moto.Descripcion} | Cantidad: 1`);  
+        if (moto.Stock > 0) {
+            const motoConCantidad = { ...moto, cantidad: 1 };
+            carrito.push(motoConCantidad);
+            alert(`Moto agregada al carrito: ${moto.Descripcion} | Cantidad: 1`);
+        }
+        else {
+            alert("No hay stock disponible para este producto.");
+        }         
     }
     // Guardamos el carrito actualizado
     localStorage.setItem('carrito', JSON.stringify(carrito));      
