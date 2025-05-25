@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded',async()=>{
     navContainer.innerHTML=navbar;
     footerContainer.innerHTML=footer;
     let productos= obtenerProductos();
-    ActualizarCarrito(productos);          
+    ActualizarCarrito(productos);
+    //LLama aparte para que no se asignen multiples listener
+    EventobtnComprar();              
 });
 function ActualizarCarrito(productos){
     if (productos?.error || productos.result.length === 0) {
@@ -35,8 +37,7 @@ function ActualizarCarrito(productos){
 function asignarEventosCarrito() {
     const btnsCarrito = document.querySelectorAll('.btnEliminarCarrito');
     const btnsMenos=document.querySelectorAll('.btnMenos');
-    const btnsMas=document.querySelectorAll('.btnMas');
-    const btnComprar= document.querySelector('.btnComprar');
+    const btnsMas=document.querySelectorAll('.btnMas');    
     navbarEventos();
     btnsCarrito.forEach(btn => {
         btn.addEventListener('click',(e) => {
@@ -98,7 +99,11 @@ function asignarEventosCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));            
             ActualizarCarrito({ result: carrito });
         });        
-    });
+    });   
+};
+//Accion De compra
+function EventobtnComprar(){  
+    const btnComprar= document.querySelector('.btnComprar');
     btnComprar.addEventListener('click',async()=>{        
         const user= JSON.parse(sessionStorage.getItem('usuario'));
         const productos= obtenerProductos();        
