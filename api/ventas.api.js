@@ -14,8 +14,8 @@ export const NuevaVenta= async(venta)=>{
             const errorData = await Res.json();
             throw new Error(errorData.error || "Error desconocido al realizar venta");
         }        
-        const data= await Res.json();   
-        if (!data.NewVenta) {
+        const data= await Res.json();            
+        if (!data.NuevaVenta) {
             throw new Error("La respuesta no contiene una venta.");
         }     
         return data;

@@ -1,5 +1,6 @@
 import {cardsCart,detalleVenta,calcularTotal} from "../../components/cardCart.component.js";
 import {NuevaVenta} from "../../api/ventas.api.js";
+import {DecodeIdUser} from "../../api/usuarios.api.js"
 import {navbar,navbarEventos} from"/components/navbar.component.js"
 import {footer} from"/components/footer.component.js";
 const cartContainer=document.getElementById('ContainerProductos');
@@ -13,7 +14,8 @@ document.addEventListener('DOMContentLoaded',async()=>{
     let productos= obtenerProductos();
     ActualizarCarrito(productos);
     //LLama aparte para que no se asignen multiples listener
-    EventobtnComprar();              
+    EventobtnComprar();
+    navbarEventos();              
 });
 function ActualizarCarrito(productos){
     if (productos?.error || productos.result.length === 0) {
@@ -37,8 +39,7 @@ function ActualizarCarrito(productos){
 function asignarEventosCarrito() {
     const btnsCarrito = document.querySelectorAll('.btnEliminarCarrito');
     const btnsMenos=document.querySelectorAll('.btnMenos');
-    const btnsMas=document.querySelectorAll('.btnMas');    
-    navbarEventos();
+    const btnsMas=document.querySelectorAll('.btnMas');   
     btnsCarrito.forEach(btn => {
         btn.addEventListener('click',(e) => {
             const card = e.target.closest('[data-id]');
@@ -47,7 +48,7 @@ function asignarEventosCarrito() {
             let carritoObj = obtenerProductos();
             let carrito = carritoObj?.result || [];
             // Filtrar el carrito sin el producto que tiene ese ID
-            carrito = carrito.filter(moto => moto.id !== Number(id));
+            carrito = carrito.filter(moto => moto.id !== id);
             // Guardar el carrito actualizado
             localStorage.setItem('carrito', JSON.stringify(carrito));
             alert("Moto eliminada del carrito.");
@@ -63,7 +64,7 @@ function asignarEventosCarrito() {
             let carritoObj = obtenerProductos();
             let carrito = carritoObj?.result || [];
             //busca por id      
-            const index = carrito.findIndex(p => p.id === Number(id));
+            const index = carrito.findIndex(p => p.id === id);
             if (index !== -1) {
                 //Disminuye cantidad
                 if(carrito[index].cantidad>1)
@@ -84,7 +85,7 @@ function asignarEventosCarrito() {
             let carritoObj = obtenerProductos();
             let carrito = carritoObj?.result || [];
             //busca por id      
-            const index = carrito.findIndex(p => p.id === Number(id));
+            const index = carrito.findIndex(p => p.id === id);
             if (index !== -1) {
                 //Aumenta cantidad
                 if(carrito[index].Stock > carrito[index].cantidad)
@@ -105,7 +106,8 @@ function asignarEventosCarrito() {
 function EventobtnComprar(){  
     const btnComprar= document.querySelector('.btnComprar');
     btnComprar.addEventListener('click',async()=>{        
-        const user= JSON.parse(sessionStorage.getItem('usuario'));
+        const token= sessionStorage.getItem('usuario');               
+        const idUser = await DecodeIdUser(token);        
         const productos= obtenerProductos();        
         if (!productos || !productos.result || productos.result.length === 0) {
             alert("El carrito está vacío. Agregue productos antes de comprar.");
@@ -113,7 +115,7 @@ function EventobtnComprar(){
         }
         const venta={
             fecha:dayjs().format('DD/MM/YYYY'),
-            idCli:user.id,
+            id_cliente:idUser.id,
             prods:productos.result.map((p)=>({
                 idProd: p.id,
                 cantidad: p.cantidad
@@ -124,7 +126,7 @@ function EventobtnComprar(){
         {
             return alert(`Error al obtener la venta: ${ventaNueva.error}`);
         }
-        if (!ventaNueva || !ventaNueva.NewVenta){
+        if (!ventaNueva || !ventaNueva.NuevaVenta){
             return alert("Error: La respuesta de la venta es inválida.");
         }    
         console.log(JSON.stringify(ventaNueva, null, 2));        

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/resource/img/favicon.png">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.cs" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">  
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>    
@@ -18,27 +18,15 @@
             </div>
         </nav>
     </header>
-    <main class="flex items-center justify-center min-h-150">
-        <form class="flex flex-col justify-around items-center bg-stone-200 w-4/5 h-100 rounded-2xl sm:w-3/5 lg:w-3/6 xl:h-120 2xl:w-2/6" id="frmLogin">
-            <h3 class="flex font-semibold text-3xl mt-10 -mb-10">Login</h3>
-            <div class="flex flex-col items-center space-y-8 w-full">
-                <div class="bg-stone-300 space-y-2 rounded-full sm:w-3/4 2xl:w-3/5">
-                    <label for="user"></label>
-                    <input type="text" class="w-full pl-5 text-lg xl:h-9 rounded-full" placeholder="Usuario" id="user">
-                </div>
-                <div class="bg-stone-300 space-y-2 rounded-full sm:w-3/4 2xl:w-3/5">
-                    <label for="pass"></label>
-                    <input type="password" class="w-full pl-5 text-lg xl:h-9 rounded-full" placeholder="Contraseña" id="pass">
-                </div>
-            </div>          
-            <input type="submit" class="bg-green-400 rounded-3xl font-semibold w-3/4 h-10 mb-5 2xl:w-2/5"value="Iniciar Sesion">
-        </form>
-        
+    <main class="flex  flex-col items-center justify-center min-h-150"> 
+        <div class="divForm bg-stone-200 w-4/5 min-h-100 rounded-2xl sm:w-3/5 lg:w-3/6 xl:min-h-120 2xl:w-2/6">
+            <!-- Froms de registro / login -->
+        </div>       
+                
     </main>
     <footer id="footerContainer" class="bg-white rounded-lg shadow-sm dark:bg-gray-900 m-4">
         <!-- FOOTER -->
     </footer> 
     <script type="module" src="./index.controller.js"></script>
-
 </body>
 </html>

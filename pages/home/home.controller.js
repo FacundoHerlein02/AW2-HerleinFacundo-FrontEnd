@@ -45,7 +45,7 @@ function asignarEventosCarrito() {
             const card = e.target.closest('[data-id]');
             const id = card?.getAttribute('data-id');
             if (!id) return alert("No se pudo obtener el ID del producto.");
-            const moto = await getProductosId(Number(id))
+            const moto = await getProductosId(id)
             if (moto.error) {
                 return alert(`Error al obtener la moto: ${moto.error}`);
             }            
@@ -62,6 +62,8 @@ function agregarAlCarrito(moto) {
         if(carrito[index].cantidad < moto.Stock)
         {
             carrito[index].cantidad += 1;
+            //Mantiene el stock actualizado
+            carrito[index].Stock=moto.Stock;            
             alert(`Moto agregada al carrito: ${moto.Descripcion} | Cantidad: ${carrito[index].cantidad}`);
         }
         else {
