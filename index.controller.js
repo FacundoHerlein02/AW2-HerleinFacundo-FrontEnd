@@ -17,15 +17,24 @@ function renderLoginForm() {
     if (frmLogin) {
         frmLogin.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const submitButton = frmLogin.querySelector('input[type="submit"]');
+            const spinner = document.getElementById('spinnerLogin');
+            submitButton.value = 'Iniciando Sesión...'; 
+            submitButton.disabled = true; 
+            spinner.classList.remove('hidden'); // muestra spinner
+
             const usuario = document.getElementById('user').value;
             const contraseña = document.getElementById('pass').value;
             const Res = await logIn(usuario, contraseña);
             if (Res.error) {
                 alert(Res.error);
+                submitButton.value = 'Iniciar Sesión'; 
+                submitButton.disabled = false;
+                spinner.classList.add('hidden'); // Oculta spinner
             } else {
                 alert(Res.mensaje);
                 sessionStorage.setItem('usuario', Res.token);
-                window.location.href = './pages/home/home.html';
+                window.location.href = './pages/home/home.html';                
             }
         });
     }
@@ -47,6 +56,12 @@ function renderRegisterForm() {
     {                   
         frmRegister.addEventListener('submit',async(e)=>{            
             e.preventDefault();
+            const submitButton = frmRegister.querySelector('input[type="submit"]');
+            const spinner = document.getElementById('spinnerRegister');            
+            submitButton.value = 'Registrando...';
+            submitButton.disabled = true;
+            spinner.classList.remove('hidden'); // muestra spinner
+
             const nombre= document.getElementById('nombre').value;
             const apellido=document.getElementById('apellido').value;   
             const usuario= document.getElementById('user').value;
@@ -54,7 +69,10 @@ function renderRegisterForm() {
             const Res=await register(nombre,apellido,usuario,clave);
             if(Res.error)
             {
-                alert(Res.error);        
+                alert(Res.error);
+                submitButton.value = 'Registrarse';
+                submitButton.disabled = false;
+                spinner.classList.add('hidden'); // muestra spinner        
             }
             else
             {
