@@ -106,11 +106,3 @@ async function ListadoVentas(){
     });
 };
 
-//  <thead>
-//                             <tr class="bg-gray-200">
-//                                 <th class="border px-2 py-1">Marca</th>
-//                                 <th class="border px-2 py-1">Descripción</th>
-//                                 <th class="border px-2 py-1">Cant.</th>
-//                                 <th class="border px-2 py-1 text-right">Subtotal</th>
-//                             </tr>
-//                         </thead>

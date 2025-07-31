@@ -43,8 +43,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
         mainElement.className = 'flex flex-row justify-center min-h-100  2xl:p-10';
         mainElement.innerHTML=ResultFailure;
         //Permite reintentar el pago
-        EventobtnComprar();
-        alert("fallo") 
+        EventobtnComprar();        
     }
     else if(status === 'pending')
     {
@@ -53,8 +52,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
         cartContainer.classList.add('hidden');  
         const mainElement = document.getElementById('mainContainer');
         mainElement.className = 'flex flex-row justify-center min-h-100  2xl:p-10';
-        mainElement.innerHTML=ResultPending;
-        alert("pendiente") 
+        mainElement.innerHTML=ResultPending;         
     }
     else{      
         detalleVentaContainer.innerHTML=DetalleVenta;
@@ -155,7 +153,9 @@ function asignarEventosCarrito() {
 //Accion De compra
 function EventobtnComprar(){  
     const btnComprar= document.querySelector('.btnComprar');
-    btnComprar.addEventListener('click',async()=>{        
+    btnComprar.disabled=false;
+    btnComprar.addEventListener('click',async()=>{
+        btnComprar.disabled=true;        
         const token= sessionStorage.getItem('usuario');
         //Pasa el id de cliente               
         const idUser = await DecodeIdUser(token);
@@ -166,6 +166,7 @@ function EventobtnComprar(){
         const fecha=dayjs().format('DD/MM/YYYY')        
         if (!productos || !productos.result || productos.result.length === 0) {
             alert("El carrito está vacío. Agregue productos antes de comprar.");
+            btnComprar.disabled=false;
             return;
         }
         //Crea la ORDEN DE PAGO        
